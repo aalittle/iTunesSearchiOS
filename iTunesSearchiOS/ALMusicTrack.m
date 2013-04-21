@@ -10,4 +10,10 @@
 
 @implementation ALMusicTrack
 
+-(NSString *)description {
+    
+    return [NSString stringWithFormat:@"artist id: %@, artist name: %@, song name: %@", [self.artistId stringValue], self.artistName, self.trackName];
+}
+
+
 @end

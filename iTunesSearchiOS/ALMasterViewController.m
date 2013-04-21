@@ -37,19 +37,27 @@
     
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[ALMusicTrack class]];
     [mapping addAttributeMappingsFromDictionary:@{
-     @"artistId": @"artistId",
-     @"artistName": @"artistName",
-     @"trackName": @"trackName"
+         @"artistId": @"artistId",
+         @"artistName": @"artistName",
+         @"trackName": @"trackName"
      }];
     
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:@"results" statusCodes:nil];
     
-    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/search?entity=musicTrack&limit=1&term=maroon"];
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/search?entity=musicTrack&limit=10&term=maroon"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
-        NSLog(@"The iTunes API search returned: %@", [result array]);
+        
+        NSArray *tracks = [result array];
+        
+        for (ALMusicTrack *track in tracks) {
+            
+            NSLog(@"Track: %@\n", [track description]);
+        }
+        
+        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:[error localizedDescription]

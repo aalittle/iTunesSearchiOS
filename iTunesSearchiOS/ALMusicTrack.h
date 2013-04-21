@@ -10,8 +10,11 @@
 
 @interface ALMusicTrack : NSObject
 
-    @property (nonatomic, copy) NSNumber *artistId;
-    @property (nonatomic, copy) NSString *artistName;
-    @property (nonatomic, copy) NSString *trackName;
+@property (nonatomic, copy) NSNumber *artistId;
+@property (nonatomic, copy) NSString *artistName;
+@property (nonatomic, copy) NSString *trackName;
+
+-(NSString *)description;
+
 
 @end

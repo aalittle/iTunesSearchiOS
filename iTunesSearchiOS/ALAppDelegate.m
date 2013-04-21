@@ -24,15 +24,8 @@
     //let AFNetworking manage the activity indicator
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
+    //important to register the correct MIME type that is used by the iTunes Search API: text/javascript
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"text/javascript"];
-    
-    // Initialize HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"https://itunes.apple.com"];
-    AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    //we want to work with JSON-Data
-    [client setDefaultHeader:@"Accept" value:RKMIMETypeJSON];
-    [client setParameterEncoding:AFJSONParameterEncoding];
-    
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
