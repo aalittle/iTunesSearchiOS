@@ -7,8 +7,9 @@
 //
 
 #import "ALMasterViewController.h"
-
 #import "ALDetailViewController.h"
+#import "ALMusicTrack.h"
+#import <RestKit/RestKit.h>
 
 @interface ALMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -33,6 +34,33 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[ALMusicTrack class]];
+    [mapping addAttributeMappingsFromDictionary:@{
+     @"artistId": @"artistId",
+     @"artistName": @"artistName",
+     @"trackName": @"trackName"
+     }];
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:nil statusCodes:nil];
+    
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/search?entity=musicTrack&limit=1&term=maroon"];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
+    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+        NSLog(@"The iTunes API search returned: %@", [result array]);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[error localizedDescription]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"Hit error: %@", error);
+    }];
+    
+    [operation start];
 }
 
 - (void)didReceiveMemoryWarning

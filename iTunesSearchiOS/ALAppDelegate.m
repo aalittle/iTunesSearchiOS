@@ -7,8 +7,8 @@
 //
 
 #import "ALAppDelegate.h"
-
 #import "ALMasterViewController.h"
+#import <RestKit/RestKit.h>
 
 @implementation ALAppDelegate
 
@@ -16,11 +16,31 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+-(void)setupAndEnableRestKit
+{
+    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    
+    //let AFNetworking manage the activity indicator
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"text/javascript"];
+    
+    // Initialize HTTPClient
+    NSURL *baseURL = [NSURL URLWithString:@"https://itunes.apple.com"];
+    AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    //we want to work with JSON-Data
+    [client setDefaultHeader:@"Accept" value:RKMIMETypeJSON];
+    [client setParameterEncoding:AFJSONParameterEncoding];
+    
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-
+    [self setupAndEnableRestKit];
+    
     ALMasterViewController *masterViewController = [[ALMasterViewController alloc] initWithNibName:@"ALMasterViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     masterViewController.managedObjectContext = self.managedObjectContext;
