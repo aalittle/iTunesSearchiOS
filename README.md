@@ -1,0 +1,53 @@
+###iTunesSearchiOS
+===============
+
+This is a little test project to play with the iTUnes Search API.
+
+- ACR enabled
+- iPhone-only
+- iOS 6.1
+- no storyboards
+- uses [RestKit][restkit.org]
+
+### Setup RestKit (taken from the RestKit readme)
+
+The recommended approach for installing RestKit is via the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation. For best results, it is recommended that you install via CocoaPods **>= 0.15.2** using Git **>= 1.8.0** installed via Homebrew.
+
+### via CocoaPods
+
+Install CocoaPods if not already available:
+
+``` bash
+$ [sudo] gem install cocoapods
+$ pod setup
+```
+
+Change to the directory of your Xcode project, and Create and Edit your Podfile and add RestKit:
+
+``` bash
+$ cd /path/to/MyProject
+$ touch Podfile
+$ edit Podfile
+platform :ios, '5.0' 
+# Or platform :osx, '10.7'
+pod 'RestKit', '~> 0.20.0'
+
+# Testing and Search are optional components
+pod 'RestKit/Testing', '~> 0.20.0'
+pod 'RestKit/Search',  '~> 0.20.0'
+```
+
+Install into your project:
+
+``` bash
+$ pod install
+```
+
+Open your project in Xcode from the .xcworkspace file (not the usual project file)
+
+``` bash
+$ open MyProject.xcworkspace
+```
+
+Please note that if your installation fails, it may be because you are installing with a version of Git lower than CocoaPods is expecting. Please ensure that you are running Git **>= 1.8.0** by executing `git --version`. You can get a full picture of the installation details by executing `pod install --verbose`.
+
