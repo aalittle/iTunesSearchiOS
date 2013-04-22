@@ -7,7 +7,7 @@ This is a little test project to play with the iTUnes Search API.
 - iPhone-only
 - iOS 6.1
 - no storyboards
-- uses [RestKit][restkit.org]
+- uses [RestKit](restkit.org)
 
 ### Setup RestKit (taken from the RestKit readme)
 
