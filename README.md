@@ -11,6 +11,8 @@ This is a little test project to play with the iTUnes Search API.
 
 ### Setup RestKit (taken from the RestKit readme)
 
+## NOTE: you do not have to do this after cloning the repo, just added the steps here for posterity.
+
 The recommended approach for installing RestKit is via the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation. For best results, it is recommended that you install via CocoaPods **>= 0.15.2** using Git **>= 1.8.0** installed via Homebrew.
 
 ### via CocoaPods
