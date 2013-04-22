@@ -118,7 +118,21 @@ enum FilterState : NSInteger {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    NSString *mediaTitle;
+    if (self.filterSearchControl.selectedSegmentIndex == FilterStateAlbum){
+        
+        ALAlbum *album = (ALAlbum *)[self.mediaSearchResults objectAtIndex:indexPath.row];
+        mediaTitle = album.albumName;
+    }
+    else {
+        ALMusicTrack *track = (ALMusicTrack *)[self.mediaSearchResults objectAtIndex:indexPath.row];
+        mediaTitle = track.trackName;
+    }
+    
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(didMakeSelectionWithTitle:)]) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.delegate didMakeSelectionWithTitle:mediaTitle];
+    }
 }
 
 #pragma mark UIScrollViewDelegate

@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ALSearchViewController.h"
 
 @class ALDetailViewController;
 
 #import <CoreData/CoreData.h>
 
-@interface ALMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface ALMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, TableSelectorDelegate>
 
 @property (strong, nonatomic) ALDetailViewController *detailViewController;
 

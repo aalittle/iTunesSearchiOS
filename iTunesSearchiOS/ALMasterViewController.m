@@ -8,7 +8,6 @@
 
 #import "ALMasterViewController.h"
 #import "ALDetailViewController.h"
-#import "ALSearchViewController.h"
 #import "ALMusicTrack.h"
 #import <RestKit/RestKit.h>
 
@@ -32,7 +31,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
+    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displaySearchController)];
     self.navigationItem.rightBarButtonItem = addButton;
 }
@@ -43,7 +42,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)insertNewObject:(id)sender withText:(NSString *)textToInsert
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
@@ -51,6 +50,7 @@
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    [newManagedObject setValue:textToInsert forKey:@"mediaText"];
     [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
     
     // Save the context.
@@ -221,6 +221,8 @@
 -(void)displaySearchController {
     
     ALSearchViewController *searchController = [[ALSearchViewController alloc] initWithNibName:@"ALSearchViewController" bundle:nil];
+    searchController.delegate = self;
+    
     [self.navigationController pushViewController:searchController animated:YES];
 }
 
@@ -237,7 +239,14 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    cell.textLabel.text = [[object valueForKey:@"mediaText"] description];
+}
+
+#pragma mark TableSelectorDelegate
+
+-(void)didMakeSelectionWithTitle:(NSString *)mediaTitle {
+    
+    [self insertNewObject:self withText:mediaTitle];
 }
 
 @end

@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 
+@protocol TableSelectorDelegate <NSObject>
+
+@optional
+- (void)didMakeSelectionWithTitle:(NSString *)mediaTitle;
+@end
+
 @interface ALSearchViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+
+@property (nonatomic, weak) id<TableSelectorDelegate> delegate;
 
 @end
