@@ -30,6 +30,8 @@
 		DDA1B45917242AC1002BD906 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDA1B42C17242AC1002BD906 /* CoreData.framework */; };
 		DDA1B46117242AC1002BD906 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DDA1B45F17242AC1002BD906 /* InfoPlist.strings */; };
 		DDA1B46417242AC1002BD906 /* iTunesSearchiOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA1B46317242AC1002BD906 /* iTunesSearchiOSTests.m */; };
+		DDA7EDBC172479D800330485 /* ALSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA7EDBA172479D800330485 /* ALSearchViewController.m */; };
+		DDA7EDC01724818600330485 /* ALSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDA7EDBF1724818600330485 /* ALSearchViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,9 @@
 		DDA1B46017242AC1002BD906 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DDA1B46217242AC1002BD906 /* iTunesSearchiOSTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTunesSearchiOSTests.h; sourceTree = "<group>"; };
 		DDA1B46317242AC1002BD906 /* iTunesSearchiOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iTunesSearchiOSTests.m; sourceTree = "<group>"; };
+		DDA7EDB9172479D800330485 /* ALSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSearchViewController.h; sourceTree = "<group>"; };
+		DDA7EDBA172479D800330485 /* ALSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSearchViewController.m; sourceTree = "<group>"; };
+		DDA7EDBF1724818600330485 /* ALSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ALSearchViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +160,11 @@
 				DDA1B44417242AC1002BD906 /* ALMasterViewController.m */,
 				DDA1B44617242AC1002BD906 /* ALDetailViewController.h */,
 				DDA1B44717242AC1002BD906 /* ALDetailViewController.m */,
+				DDA7EDB9172479D800330485 /* ALSearchViewController.h */,
+				DDA7EDBA172479D800330485 /* ALSearchViewController.m */,
 				DDA1B44917242AC1002BD906 /* ALMasterViewController.xib */,
 				DDA1B44C17242AC1002BD906 /* ALDetailViewController.xib */,
+				DDA7EDBF1724818600330485 /* ALSearchViewController.xib */,
 				DDA1B44017242AC1002BD906 /* iTunesSearchiOS.xcdatamodeld */,
 				DDA1B42F17242AC1002BD906 /* Supporting Files */,
 			);
@@ -276,6 +284,7 @@
 				DDA1B43F17242AC1002BD906 /* Default-568h@2x.png in Resources */,
 				DDA1B44B17242AC1002BD906 /* ALMasterViewController.xib in Resources */,
 				DDA1B44E17242AC1002BD906 /* ALDetailViewController.xib in Resources */,
+				DDA7EDC01724818600330485 /* ALSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +353,7 @@
 				DDA1B44517242AC1002BD906 /* ALMasterViewController.m in Sources */,
 				DDA1B44817242AC1002BD906 /* ALDetailViewController.m in Sources */,
 				DD0AE590172448ED00349DD7 /* ALMusicTrack.m in Sources */,
+				DDA7EDBC172479D800330485 /* ALSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

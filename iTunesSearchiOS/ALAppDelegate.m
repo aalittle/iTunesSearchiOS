@@ -18,8 +18,8 @@
 
 -(void)setupAndEnableRestKit
 {
-    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
-    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    //RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+    //RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     
     //let AFNetworking manage the activity indicator
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -36,6 +36,7 @@
     
     ALMasterViewController *masterViewController = [[ALMasterViewController alloc] initWithNibName:@"ALMasterViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:255.0/255.0 green:138.0/255.0 blue:78.0/255.0 alpha:1.0];
     masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];

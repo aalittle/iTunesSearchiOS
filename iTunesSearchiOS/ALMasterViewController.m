@@ -8,6 +8,7 @@
 
 #import "ALMasterViewController.h"
 #import "ALDetailViewController.h"
+#import "ALSearchViewController.h"
 #import "ALMusicTrack.h"
 #import <RestKit/RestKit.h>
 
@@ -25,50 +26,15 @@
     }
     return self;
 }
-							
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displaySearchController)];
     self.navigationItem.rightBarButtonItem = addButton;
-    
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[ALMusicTrack class]];
-    [mapping addAttributeMappingsFromDictionary:@{
-         @"artistId": @"artistId",
-         @"artistName": @"artistName",
-         @"trackName": @"trackName"
-     }];
-    
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:@"results" statusCodes:nil];
-    
-    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/search?entity=musicTrack&limit=10&term=maroon"];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
-    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
-        
-        NSArray *tracks = [result array];
-        
-        for (ALMusicTrack *track in tracks) {
-            
-            NSLog(@"Track: %@\n", [track description]);
-        }
-        
-        
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[error localizedDescription]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        NSLog(@"Hit error: %@", error);
-    }];
-    
-    [operation start];
 }
 
 - (void)didReceiveMemoryWarning
@@ -250,6 +216,12 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+}
+
+-(void)displaySearchController {
+    
+    ALSearchViewController *searchController = [[ALSearchViewController alloc] initWithNibName:@"ALSearchViewController" bundle:nil];
+    [self.navigationController pushViewController:searchController animated:YES];
 }
 
 /*
