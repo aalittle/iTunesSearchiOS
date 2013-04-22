@@ -32,6 +32,7 @@
 		DDA1B46417242AC1002BD906 /* iTunesSearchiOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA1B46317242AC1002BD906 /* iTunesSearchiOSTests.m */; };
 		DDA7EDBC172479D800330485 /* ALSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA7EDBA172479D800330485 /* ALSearchViewController.m */; };
 		DDA7EDC01724818600330485 /* ALSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDA7EDBF1724818600330485 /* ALSearchViewController.xib */; };
+		DDA7EDC31724C04900330485 /* ALAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA7EDC21724C04900330485 /* ALAlbum.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		DDA7EDB9172479D800330485 /* ALSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSearchViewController.h; sourceTree = "<group>"; };
 		DDA7EDBA172479D800330485 /* ALSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSearchViewController.m; sourceTree = "<group>"; };
 		DDA7EDBF1724818600330485 /* ALSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ALSearchViewController.xib; sourceTree = "<group>"; };
+		DDA7EDC11724C04900330485 /* ALAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAlbum.h; sourceTree = "<group>"; };
+		DDA7EDC21724C04900330485 /* ALAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAlbum.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 			children = (
 				DD0AE58E172448ED00349DD7 /* ALMusicTrack.h */,
 				DD0AE58F172448ED00349DD7 /* ALMusicTrack.m */,
+				DDA7EDC11724C04900330485 /* ALAlbum.h */,
+				DDA7EDC21724C04900330485 /* ALAlbum.m */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				DDA1B44817242AC1002BD906 /* ALDetailViewController.m in Sources */,
 				DD0AE590172448ED00349DD7 /* ALMusicTrack.m in Sources */,
 				DDA7EDBC172479D800330485 /* ALSearchViewController.m in Sources */,
+				DDA7EDC31724C04900330485 /* ALAlbum.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,16 +8,45 @@
 
 #import "ALSearchViewController.h"
 #import "ALMusicTrack.h"
+#import "ALAlbum.h"
 
 @interface ALSearchViewController ()
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *mediaSearchResults;
+@property (weak, nonatomic) IBOutlet UITextField *searchTermField;
+@property (strong, nonatomic) RKResponseDescriptor *responseDescriptor;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *filterSearchControl;
+
+typedef enum FilterState : NSInteger FilterState;
+enum FilterState : NSInteger {
+
+    FilterStateAlbum = 0,
+    FilterStateSong = 1
+    
+};
+
 
 @end
 
 @implementation ALSearchViewController
 
+
+
 - (IBAction)onSearchTermChanged:(id)sender {
 
-    [self calliTunesSearchAPIWithSearchTerm:self.searchTermField.text];
+    NSString *filterTerm = [self filterStringForIndex:self.filterSearchControl.selectedSegmentIndex];
+    [self calliTunesSearchAPIWithSearchTerm:self.searchTermField.text andFilter:filterTerm];
+}
+
+
+- (IBAction)onFilterChanged:(id)sender {
+    
+    [self setupResponseDescriptorForFilter:self.filterSearchControl.selectedSegmentIndex];
+    
+    //rerun the iTunes sear
+    NSString *filterTerm = [self filterStringForIndex:self.filterSearchControl.selectedSegmentIndex];
+    [self calliTunesSearchAPIWithSearchTerm:self.searchTermField.text andFilter:filterTerm];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,7 +63,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mediaSearchResults = [[NSMutableArray alloc] init];
-    [self setupResponseDescriptor];
+    [self setupResponseDescriptorForFilter:self.filterSearchControl.selectedSegmentIndex];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,12 +91,21 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    ALMusicTrack *track = (ALMusicTrack *)[self.mediaSearchResults objectAtIndex:indexPath.row];
-    cell.textLabel.text = track.trackName;
+    if (self.filterSearchControl.selectedSegmentIndex == FilterStateAlbum){
+
+        ALAlbum *album = (ALAlbum *)[self.mediaSearchResults objectAtIndex:indexPath.row];
+        cell.textLabel.text = album.albumName;
+        cell.detailTextLabel.text = @"Album";
+    }
+    else {
+        ALMusicTrack *track = (ALMusicTrack *)[self.mediaSearchResults objectAtIndex:indexPath.row];
+        cell.textLabel.text = track.trackName;
+        cell.detailTextLabel.text = @"Song";
+    }
     
     return cell;
 }
@@ -83,23 +121,54 @@
 
 }
 
+#pragma mark UIScrollViewDelegate
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
+    [self.searchTermField resignFirstResponder];
+}
+
+#pragma mark Filter Search Control
+
+-(NSString *)filterStringForIndex:(NSInteger)filterIndex {
+    
+    if (filterIndex == FilterStateSong)
+        return @"musicTrack";
+    else
+        return @"album";
+}
+
 #pragma mark iTunes Search Handling
 
--(void)setupResponseDescriptor {
+-(void)setupResponseDescriptorForFilter:(FilterState)filterIndex {
     
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[ALMusicTrack class]];
-    [mapping addAttributeMappingsFromDictionary:@{
-         @"artistId": @"artistId",
-         @"artistName": @"artistName",
-         @"trackName": @"trackName"
-     }];
+    NSDictionary *mappingDictionary;
+    Class mappingClass;
+    
+    if (filterIndex == FilterStateAlbum) {
+        mappingDictionary = @{
+                              @"artistId": @"artistId",
+                              @"artistName": @"artistName",
+                              @"collectionName": @"albumName" };
+        mappingClass = [ALAlbum class];
+    }
+    else {
+        mappingDictionary = @{
+                              @"artistId": @"artistId",
+                              @"artistName": @"artistName",
+                              @"trackName": @"trackName" };
+         mappingClass = [ALMusicTrack class];
+    }
+    
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:mappingClass];
+    [mapping addAttributeMappingsFromDictionary:mappingDictionary];
     
     self.responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:@"results" statusCodes:nil];
 }
 
--(NSURL *)createURLForCallWithSearchTerm:(NSString *)searchTerm {
+-(NSURL *)createURLForCallWithSearchTerm:(NSString *)searchTerm andFilter:(NSString *)filterTerm {
     
-    NSString *urlAsString = [NSString stringWithFormat:@"https://itunes.apple.com/search?entity=musicTrack&limit=5&term=%@",
+    NSString *urlAsString = [NSString stringWithFormat:@"https://itunes.apple.com/search?entity=%@&limit=25&term=%@", filterTerm,
                              [searchTerm stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url = [NSURL URLWithString:urlAsString];
 
@@ -116,12 +185,12 @@
     [alert show];
 }
 
--(void)calliTunesSearchAPIWithSearchTerm:(NSString *)searchTerm {
+-(void)calliTunesSearchAPIWithSearchTerm:(NSString *)searchTerm andFilter:(NSString *)filterTerm {
 
     //Let's get this on a background thread. Thanks, GCD.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
     ^{
-        NSURLRequest *request = [NSURLRequest requestWithURL:[self createURLForCallWithSearchTerm:searchTerm]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[self createURLForCallWithSearchTerm:searchTerm andFilter:filterTerm]];
         RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[self.responseDescriptor]];
         [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
             

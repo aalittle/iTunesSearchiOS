@@ -18,6 +18,7 @@
 
 -(void)setupAndEnableRestKit
 {
+    //uncomment these if you wish to see verbose logging from RestKit
     //RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
     //RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     
@@ -31,7 +32,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    //Let's get some of the basic RestKit plumbing taken care of
     [self setupAndEnableRestKit];
     
     ALMasterViewController *masterViewController = [[ALMasterViewController alloc] initWithNibName:@"ALMasterViewController" bundle:nil];
