@@ -2,7 +2,9 @@
 ===============
 
 ![Main List](https://dl.dropboxusercontent.com/u/6148369/screenshots/itunessearch1.png)
-  ![Search for Music](https://dl.dropboxusercontent.com/u/6148369/screenshots/itunessearch2.png)
+
+
+![Search for Music](https://dl.dropboxusercontent.com/u/6148369/screenshots/itunessearch2.png)
 
 The app allows the user to create a list of music (albums/songs) by comepleting real-time search against the blazingly fast iTunes Search API. Find and manage a simple list of music.
 
