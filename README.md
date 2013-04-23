@@ -1,7 +1,12 @@
 ###iTunesSearchiOS
 ===============
 
-This is a little test project to play with the iTUnes Search API.
+![Main List](https://dl.dropboxusercontent.com/u/6148369/screenshots/itunessearch1.png)
+![Search for Music](https://dl.dropboxusercontent.com/u/6148369/screenshots/itunessearch2.png)
+
+The app allows the user to create a list of music (albums/songs) by comepleting real-time search against the blazingly fast iTunes Search API. Find and manage a simple list of music.
+
+Note: the UI has no polish. This was simply a proof of concept to test the speed of the iTunes Search API. Also, I wanted to play with RestKit (see below).
 
 - ACR enabled
 - iPhone-only
